@@ -1,0 +1,111 @@
+/* =========================================================
+   decorations.css
+   Extra decorative layer — load AFTER style.css.
+   1) Passions & Interests: one faint emoji watermark in
+      each corner of the section.
+   2) About Me: a soft spotlight beam sweeping from the
+      upper-right corner down toward the lower-left.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   About Me — corner spotlight
+   --------------------------------------------------------- */
+
+.about {
+    position: relative;
+    overflow: hidden;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    top: -35%;
+    right: -30%;
+    width: 90%;
+    height: 220%;
+    background: linear-gradient(
+        200deg,
+        rgba(240, 180, 41, 0.32) 0%,
+        rgba(240, 180, 41, 0.10) 32%,
+        rgba(240, 180, 41, 0) 62%
+    );
+    transform: rotate(-12deg);
+    filter: blur(6px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* keep real content above the beam */
+.about .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   Passions & Interests — corner emoji watermarks
+   --------------------------------------------------------- */
+
+.interests {
+    position: relative;
+    overflow: hidden;
+}
+
+.interests .container {
+    position: relative;
+    z-index: 1;
+}
+
+.interests::before,
+.interests::after,
+.interests-grid::before,
+.interests-grid::after {
+    position: absolute;
+    font-size: 6rem;
+    line-height: 1;
+    opacity: 0.10;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    filter: saturate(0.9);
+}
+
+/* top-left */
+.interests::before {
+    content: '🎭';
+    top: 28px;
+    left: 28px;
+}
+
+/* bottom-right */
+.interests::after {
+    content: '🌟';
+    bottom: 28px;
+    right: 28px;
+}
+
+/* top-right (anchored to .interests via the grid, which has no
+   position of its own, so it shares the section's corners) */
+.interests-grid::before {
+    content: '🎨';
+    top: 28px;
+    right: 28px;
+}
+
+/* bottom-left */
+.interests-grid::after {
+    content: '💻';
+    bottom: 28px;
+    left: 28px;
+}
+
+/* Tone the emoji watermarks down further on small screens so
+   they don't compete with the cards */
+@media (max-width: 640px) {
+    .interests::before,
+    .interests::after,
+    .interests-grid::before,
+    .interests-grid::after {
+        font-size: 3.4rem;
+        opacity: 0.08;
+    }
+}
